@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index-style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="./images/toque.svg" />
+    <title>Les petits plats</title>
+</head>
+
+<body>
+    <header>
+        <div class="containerLogo">
+            <a href="./index.html">
+                <img src="./images/logo.svg" alt="logo">
+            </a>
+        </div>
+        <div id="navSearch">
+            <div id="textSearch">
+                <input type="text" id="search" name="search" data-list placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette">
+            </div>
+            <div id="buttonLoupe">
+                <button class="loupe"></button>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div id="choice" class="displayNone"></div>
+        <div id="navFind">
+            <div id="searchOne">
+                <div class="dropdownTri findIngredients">
+                    <input type="text" list="listElementIngredient" name="ingredients" class="dropdownText ingredients" placeholder="Ingrédients">
+                    <div id="elemntArrowI" class="arrowI"><button class="arrow arrowIngredients"></button></div>
+                </div>
+                <div>
+                    <ul id="listElementIngredient" class="listElement listElementIngred">
+                    </ul>
+                </div>
+            </div>
+            <div id="searchTwo">
+                <div class="dropdownTri findAppareil">
+                    <input type="text" list="listElementAppareil" name="appareils" class="dropdownText appareil" placeholder="Appareils">
+                    <div id="elemntArrowI" class="arrowA"><button class="arrow arrowAppareils"></button></div>
+                </div>
+                <div>
+                    <ul id="listElementAppareil" class="listElement listElementApp">
+                    </ul>
+                </div>
+            </div>
+            <div id="searchThree">
+                <div class="dropdownTri findUstensiles">
+                    <input type="text" list="listElementUstensil" name="ustensiles" class="dropdownText ustensiles" placeholder="Ustensiles">
+                    <div id="elemntArrowI" class="arrowU"><button class="arrow arrowUstensiles"></button></div>
+                </div>
+                <div>
+                    <ul id="listElementUstensil" class="listElement listElementUst">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="sectionRecipes">
+        <div class="recipes">
+
+        </div>
+    </section>
+</body>
+
+<script type="module" src="./index-script.js"></script>
+
+</body>
+
+</html>

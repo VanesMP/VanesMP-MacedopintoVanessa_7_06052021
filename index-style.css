@@ -1,0 +1,382 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+* {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+body {
+  width: 70%;
+  margin: auto;
+  margin-top: 45px;
+  font-family: "Lato", sans-serif;
+  background: #FFFFFF;
+}
+
+input,
+button {
+  border: none;
+  background: none;
+}
+
+button,
+li {
+  cursor: pointer;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+.displayNone {
+  display: none;
+}
+
+.displayFlex {
+  display: flex;
+}
+
+header {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.containerLogo {
+  width: 268px;
+  height: 93px;
+  margin: auto;
+}
+
+#navSearch {
+  width: 100%;
+  height: 69px;
+  display: flex;
+  background-color: #E7E7E7;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#textSearch {
+  width: 94%;
+}
+
+#search {
+  width: 89%;
+  height: 32px;
+  margin: auto;
+  padding-left: 14px;
+  background-color: #E7E7E7;
+  font: 400 normal 18px "Lato";
+}
+
+#search::placeholder {
+  font: 400 normal 18px "Lato";
+  color: #000000;
+  opacity: 25%;
+}
+
+#buttonLoupe {
+  width: 5%;
+}
+
+.loupe {
+  width: 32px;
+  height: 32px;
+  margin: auto;
+  background-image: url(./images/loupe.svg);
+}
+
+nav {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+#choice {
+  width: 100%;
+  height: auto;
+  margin-top: 18px;
+}
+
+#navFind {
+  width: 100%;
+  height: 69px;
+  margin-top: 18px;
+  margin-bottom: 18px;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 20px;
+  justify-content: start;
+}
+
+.dropdownTri {
+  width: 170px;
+  height: 69px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.dropdownText {
+  width: 68%;
+  height: 32px;
+  margin-left: 15px;
+  font: 700 normal 18px "Lato";
+  color: white;
+}
+
+.dropdownText::placeholder {
+  color: white;
+  font: 700 normal 18px "Lato";
+}
+
+#searchOne {
+  width: auto;
+}
+
+.findIngredients {
+  background-color: #3282F7;
+}
+
+.findAppareil {
+  background-color: #68D9A4;
+}
+
+.findUstensiles {
+  background-color: #ED6454;
+}
+
+.optionElement {
+  font: 700 normal 18px "Lato";
+  color: white;
+}
+
+.arrow {
+  background: center/cover no-repeat url(./images/arrow.svg);
+  width: 16px;
+  height: 10px;
+  margin-right: 15px;
+}
+
+.arrowClick {
+  transform: rotate(180deg);
+}
+
+#elemntArrowI {
+  width: auto;
+}
+
+.listElement {
+  display: none;
+  border-radius: 5px;
+  position: relative;
+  top: -6px;
+}
+
+.listElementIngred {
+  background-color: #3282F7;
+  width: 100%;
+  column-count: 3;
+}
+
+.listElementIngredData {
+  background-color: #3282F7;
+  column-count: 1;
+}
+
+.listElementApp {
+  background-color: #68D9A4;
+  width: 100%;
+  column-count: 1;
+}
+
+.listElementUst {
+  background-color: #ED6454;
+  width: max-content;
+  column-count: 2;
+}
+
+.listElementUstensdData {
+  background-color: #ED6454;
+  width: 100%;
+  column-count: 1;
+}
+
+.liIngredient,
+.liAppareil,
+.liUstensil {
+  width: max-content;
+  height: 30px;
+  font: 700 normal 18px "Lato";
+  color: white;
+  padding-left: 15px;
+  padding-top: 7px;
+}
+
+.boxChips {
+  width: 115px;
+  height: 37px;
+}
+
+.chips {
+  width: 107px;
+  height: 37px;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.chipsIngredient {
+  background-color: #3282F7;
+}
+
+.chipsAppareil {
+  background-color: #68D9A4;
+}
+
+.chipsUstensile {
+  background-color: #ED6454;
+}
+
+.textChip {
+  color: white;
+  font: 700 normal 14px "Lato";
+  width: 55%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.closeChips {
+  background: center/cover no-repeat url(./images/close.svg);
+  width: 20px;
+  height: 20px;
+}
+
+section {
+  width: 100%;
+  height: auto;
+}
+
+.recipes {
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 25px 3%;
+  justify-items: center;
+}
+
+.oneRecipe {
+  width: 405px;
+  height: 364px;
+  display: flex;
+  flex-direction: column;
+}
+
+.imageRecipe {
+  width: 100%;
+  height: 178px;
+  background-color: #C7BEBE;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.textRecipe {
+  width: 100%;
+  height: 186px;
+  border-radius: 0px 0px 5px 5px;
+  background-color: #E7E7E7;
+}
+
+.insideTextRecipe {
+  width: 90%;
+  height: 90%;
+  display: flex;
+  margin: auto;
+  margin-top: 9px;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.firstPartTextRecipe {
+  display: flex;
+  width: 100%;
+  height: 15%;
+  align-items: center;
+}
+
+.nameRecipe {
+  width: 73%;
+  padding-right: 7px;
+  font: 400 normal 18px "Lato";
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.boxTime {
+  width: 25%;
+  display: flex;
+}
+
+.timeIcone {
+  background: center/contain no-repeat url(./images/time.svg);
+  background-size: 20px 20px;
+}
+
+.timeRecipe,
+.minute {
+  font: 700 normal 18px "Lato";
+}
+
+.secondPartTextRecipe {
+  width: 100%;
+  height: 80%;
+  display: flex;
+}
+
+.listIngredients,
+.preparationRecipe {
+  width: 50%;
+  height: 100%;
+}
+
+.listIngredients,
+.myIngredient {
+  font: 700 normal 12px "Lato";
+  line-height: 14px;
+}
+
+.preparationRecipe {
+  font: 400 normal 12px "Roboto";
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 12px;
+  height: 73%;
+}
+
+@media (max-width: 1300px) {
+  .recipes {
+    grid-template-columns: 1fr 1fr;
+    gap: 25px 9%;
+  }
+}
+
+/*# sourceMappingURL=index-style.css.map */
