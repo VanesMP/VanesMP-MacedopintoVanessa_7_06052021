@@ -38,9 +38,7 @@ let ustensilInSelectionRecipe = [];
 let ingredientInSelectionRecipeNoDuplicate = [];
 let appareilInSelectionRecipeNoDuplicate = [];
 let ustensilInSelectionRecipeNoDuplicate = [];
-let listDataIngredientInFirstsort = '';
-let listDataAppareilInFirstsort = '';
-let listDataUstensilInFirstsort = '';
+let findIndex;
 
 //CONSTANTES
 const INGREDIENT = 'INGREDIENT';
@@ -151,16 +149,16 @@ function firstSortRecipeByMainSearch() {
     if (userValueInMainSearch.length >= 3) {
         selectionRecipe = listRecipe.filter((element) => {
             if (element.name.toLowerCase().includes(userValueInMainSearch.toLowerCase())) {
-                console.log('consition name: ', element)
+                //console.log('consition name: ', element.name)
                 return true
             }
             if (element.description.toLowerCase().includes(userValueInMainSearch.toLowerCase())) {
-                console.log('consition description: ', element)
+                //console.log('consition description: ', element)
                 return true
             }
             let selectionByIngredient = element.ingredients.filter((el) => {
                 if (el.ingredient.toLowerCase().includes(userValueInMainSearch.toLowerCase())) {
-                    console.log('consition ingredient: ', element)
+                    //console.log('consition ingredient: ', element)
                     return true
                 }
             })
@@ -173,82 +171,19 @@ function firstSortRecipeByMainSearch() {
                  }
              }*/
         });
+        console.log(selectionRecipe)
         appelCreateHtmlRecette(selectionRecipe);
-        dataListIngredient.innerHTML = '';
-        dataListAppareil.innerHTML = '';
-        dataListUstensil.innerHTML = '';
-
-        //recupere les ingredients, appareil et ustensiles de chaque recette de la selection des recettes
-        selectionRecipe.forEach((data) => {
-            //ingredients
-            data.ingredients.forEach((ing) => {
-                    listDataIngredientInFirstsort = ing.ingredient;
-                    ingredientInSelectionRecipe.push(listDataIngredientInFirstsort)
-                })
-                //appareils
-            listDataAppareilInFirstsort = data.appliance;
-            appareilInSelectionRecipe.push(listDataAppareilInFirstsort);
-            //ustensils
-            data.ustensils.forEach((dat) => {
-                listDataUstensilInFirstsort = dat;
-                ustensilInSelectionRecipe.push(listDataUstensilInFirstsort)
-            })
-        });
-        //trier par ordre alphabetique puis mettre tous les element dans un tableaux sans les doublons
-        //ingredients
-        ingredientInSelectionRecipe.sort()
-        ingredientInSelectionRecipeNoDuplicate = Array.from(new Set(ingredientInSelectionRecipe));
-        //appareil
-        appareilInSelectionRecipe.sort()
-        appareilInSelectionRecipeNoDuplicate = Array.from(new Set(appareilInSelectionRecipe));
-        //ustensils
-        ustensilInSelectionRecipe.sort()
-        ustensilInSelectionRecipeNoDuplicate = Array.from(new Set(ustensilInSelectionRecipe));
-
-        //placer chaque data dans sa dropdown d' origine
-        //ingredients
-        ingredientInSelectionRecipeNoDuplicate.forEach((liIngredient) => {
-            let option = document.createElement('li')
-            option.innerHTML = liIngredient
-            option.classList.add('liIngredient')
-            option.setAttribute('data-ingredient', liIngredient)
-            dataListIngredient.appendChild(option)
-            dataListIngredient.classList.add('listElementIngredData')
-        });
-        //appareil
-        appareilInSelectionRecipeNoDuplicate.forEach((liAppareil) => {
-            let option = document.createElement('li')
-            option.innerHTML = liAppareil
-            option.classList.add('liAppareil')
-            option.setAttribute('data-appareil', liAppareil)
-            dataListAppareil.appendChild(option)
-        });
-        //ustensils
-        ustensilInSelectionRecipeNoDuplicate.forEach((liUstensil) => {
-            let option = document.createElement('li')
-            option.innerHTML = liUstensil
-            option.classList.add('liUstensil')
-            option.setAttribute('data-ustensil', liUstensil)
-            dataListUstensil.appendChild(option)
-                //dataListUstensil.classList.remove('listElementUst')
-            dataListUstensil.classList.add('listElementUstensdData')
-        });
-
-        createListenerIngredientInDropdown()
-        createListenerAppareilInDropdown()
-        createListenerUstensilInDropdown()
-            //console.log('selectionRecipe:', selectionRecipe)
+        //Ne laisser dansles dropdown que les data(ingredient & appareil & ustensile) correspond a ceux des recettes
+        recupDataForDropdown(selectionRecipe);
+        //sortRecipeChips(selectionRecipe)
     }
 
     if (selectionRecipe == '') {
-        inputMainSearch.placeholder = `Aucune recette ne correspond à votre critère… vous pouvez chercher 
-        «tarte aux pommes», «poisson» etc.`;
+        inputMainSearch.value = '';
+        inputMainSearch.placeholder = `Aucune recette ne correspond à votre critère… vous pouvez chercher «tarte aux pommes», «poisson» etc.`;
         console.log('selectionRecipe:', selectionRecipe)
     }
 }
-//Trier avec les recettes correspondantes a la saisi utilisateur de la barre de recherche
-//Ne laisser dansles dropdown que les data(ingredient & appareil & ustensile) correspond a ceux des recettes
-
 
 //---------------------- TRI DE NAVIGATION : LES 3 IMPUTS --------------------------
 //Gestionnaire d'evenement sur les input de navigation
@@ -305,6 +240,7 @@ function recupValues() {
     if (inputUstenciles.value !== null) {
         filteredRecipe = filterByUstensile(filteredRecipe, inputUstenciles.value)
     }
+    console.log('filteredRecipe danss la methode recupValue: ', filteredRecipe);
 }
 
 //---------------------- TRI DE NAVIGATION : LES ELEMENTS DANS LA DROPDOWN --------------------------
@@ -333,7 +269,6 @@ function addListIngredientDataInDropdown() {
     })
     createListenerIngredientInDropdown();
 };
-
 addListIngredientDataInDropdown(recipes)
 
 //2.1.2:l'element arrow ouvrir et ferme (si l utilisateur ne veux pas saisir un ingredient) la dropdown avec un gestionnaire d' evenement 'click'
@@ -370,8 +305,7 @@ function createListenerIngredientInDropdown() {
             arrayChips.push(myChips);
             createHtmlChips(myChips);
             inputIngredients.value = '';
-            filterByIngredient(recipes, liIngredient[i].dataset.ingredient)
-                //addListIngredientDataInDropdown()
+            //filterByIngredient(recipes, liIngredient[i].dataset.ingredient)
         })
     }
 }
@@ -423,7 +357,6 @@ function createListenerAppareilInDropdown() {
             createHtmlChips(myChips);
             inputAppareils.value = '';
             filterByAppareil(recipes, liAppareil[i].dataset.appareil);
-            addListAppareilDataInDropdown()
         })
     }
 };
@@ -480,7 +413,6 @@ function createListenerUstensilInDropdown() {
             containerUstensils.style.width = "170px";
             inputUstenciles.value = '';
             filterByUstensile(recipes, liUstensil[i].dataset.ustensil);
-            addListUstencilDataInDropdown();
         })
     }
 }
@@ -494,7 +426,7 @@ function createHtmlChips(chips) {
     selectionChips.classList.add('displayFlex');
     selectionChips.appendChild(divChips)
     closeChipsByListener(divChips, chips);
-    sortRecipeChips();
+    sortRecipeChips(recipes);
 }
 
 //Methode pour fermer les chips
@@ -510,19 +442,17 @@ function closeChipsByListener(node, myChips) {
 //et a chaque ajout ou supp recommencer
 //Recuperer le tableau global qui contient tous les chips de tous les types 
 //et avec la croix close les supprimer du tableau
-let findIndex;
-
 function closeArrayChips(myChips) {
     for (let i = 0; i < arrayChips.length; i++) {
         if (arrayChips[i].myValue === myChips.myValue) {
             findIndex = i;
             arrayChips.splice(findIndex, 1);
-            sortRecipeChips()
+            sortRecipeChips(recipes)
         }
     }
 }
 
-function sortRecipeChips() {
+function sortRecipeChips(recipes) {
     myRecipe.innerHTML = '';
     let filteredRecipeByChips = recipes;
     for (let i = 0; i < arrayChips.length; i++) {
@@ -537,7 +467,12 @@ function sortRecipeChips() {
         }
     }
     appelCreateHtmlRecette(filteredRecipeByChips);
-    console.log('filteredRecipeByChips:', filteredRecipeByChips)
+    //Methode pour recuperer les data de chaque dropdown avec les recettes actualisés
+    recupDataForDropdown(filteredRecipeByChips);
+    if (filteredRecipeByChips.length >= 50) {
+        inputMainSearch.value = '';
+    }
+    console.log('filteredRecipeByChips dans la methode SortRecipeChips:', filteredRecipeByChips)
 }
 
 //---------------------- TRI AVEC SAISIE >= 3 CARACTERES DANS LES INPUTS -----------------------------
@@ -547,10 +482,11 @@ function sortRecipeChips() {
 function showSuggestionIngredientInDropdown(list) {
     let listData = list;
     listData = list.map((data) => {
-        console.log('data:', data)
+        //console.log('data:', data)
         return data = `<li class='liIngredient' data-ingredient='${data}'>${data}</li>`
     });
     dataListIngredient.innerHTML = listData;
+
     dataListIngredient.classList.add('listElementIngredData')
 }
 
@@ -566,7 +502,7 @@ function sortByValueIngredient(e) {
         emptyArrayForInputIngredient = listIngredientForDataUser.filter((data) => {
             return data.toLowerCase().includes(userValueIngredient.toLowerCase());
         });
-        console.log(emptyArrayForInputIngredient)
+        //console.log('sortByValueIng :', listIngredientForDataUser)
         showSuggestionIngredientInDropdown(emptyArrayForInputIngredient)
         createListenerIngredientInDropdown();
         openingDropdownIngredient();
@@ -582,6 +518,7 @@ function sortByValueIngredient(e) {
         closingDropdownIngredient()
         alert("Cet ingrédient n'est pas présent dans nos recettes, essayez à nouveau!")
     }
+
 };
 
 //2:Methode pour afficher les elements de la liste d'appareil qui correspondent aux 3 lettres saisie par l utilisateur dans l input
@@ -664,4 +601,76 @@ function sortByValueUstencil(e) {
         dropdownUstensil.classList.remove('arrowClick');
         dataListUstensil.classList.remove('listElementUstensdData')
     }
+}
+
+//Methode pour recupere les ingredients/appareil/ustensiles pour les placer 
+//dans les dropdown associés elon les recettes qui actualisées
+
+function recupDataForDropdown(pRecipes) {
+    dataListAppareil.innerHTML = '';
+    dataListUstensil.innerHTML = '';
+    dataListIngredient.innerHTML = '';
+    ingredientInSelectionRecipe = [];
+    appareilInSelectionRecipe = [];
+    ustensilInSelectionRecipe = [];
+    pRecipes.forEach((data) => {
+        //ingredients
+        data.ingredients.forEach((ing) => {
+                ingredientInSelectionRecipe.push(ing.ingredient)
+                ingredientInSelectionRecipe.sort()
+            })
+            //appareils
+        appareilInSelectionRecipe.push(data.appliance);
+        appareilInSelectionRecipe.sort()
+            //ustensils
+        data.ustensils.forEach((dat) => {
+            ustensilInSelectionRecipe.push(dat);
+            ustensilInSelectionRecipe.sort()
+        })
+    });
+    //trier par ordre alphabetique puis mettre tous les element dans un tableaux sans les doublons
+    //ingredients
+    ingredientInSelectionRecipeNoDuplicate = Array.from(new Set(ingredientInSelectionRecipe));
+    console.log(ingredientInSelectionRecipeNoDuplicate)
+        //appareil
+    appareilInSelectionRecipeNoDuplicate = Array.from(new Set(appareilInSelectionRecipe));
+    console.log(appareilInSelectionRecipeNoDuplicate)
+        //ustensils
+    ustensilInSelectionRecipeNoDuplicate = Array.from(new Set(ustensilInSelectionRecipe));
+    console.log(ustensilInSelectionRecipeNoDuplicate)
+        //placer chaque data dans sa dropdown d' origine
+        //ingredients
+    ingredientInSelectionRecipeNoDuplicate.forEach((liIngredient) => {
+        let option = document.createElement('li')
+        option.innerHTML = liIngredient
+        option.classList.add('liIngredient')
+        option.setAttribute('data-ingredient', liIngredient)
+        dataListIngredient.appendChild(option)
+        dataListIngredient.classList.add('listElementIngredData')
+    });
+    if (ingredientInSelectionRecipeNoDuplicate.length > 70) {
+        dataListIngredient.classList.remove('listElementIngredData')
+    }
+    //appareil
+    appareilInSelectionRecipeNoDuplicate.forEach((liAppareil) => {
+        let option = document.createElement('li')
+        option.innerHTML = liAppareil
+        option.classList.add('liAppareil')
+        option.setAttribute('data-appareil', liAppareil)
+        dataListAppareil.appendChild(option)
+    });
+    //ustensils
+    ustensilInSelectionRecipeNoDuplicate.forEach((liUstensil) => {
+        let option = document.createElement('li')
+        option.innerHTML = liUstensil
+        option.classList.add('liUstensil')
+        option.setAttribute('data-ustensil', liUstensil)
+        dataListUstensil.appendChild(option)
+            //dataListUstensil.classList.remove('listElementUst')
+        dataListUstensil.classList.add('listElementUstensdData')
+    })
+
+    createListenerIngredientInDropdown()
+    createListenerAppareilInDropdown()
+    createListenerUstensilInDropdown()
 }
