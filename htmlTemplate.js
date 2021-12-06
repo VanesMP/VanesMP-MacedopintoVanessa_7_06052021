@@ -6,30 +6,18 @@ const myRecipe = document.querySelector('.recipes');
 export function createElementHtml(recipe) {
     let listIngredients = document.createElement('ul');
     listIngredients.classList.add('listIngredients');
-    for (let i = 0; i < recipe.ingredients.length; i++) {
+    recipe.ingredients.forEach((element) => {
         let myIngredient = document.createElement('li');
         myIngredient.classList.add('myIngredient');
-        if (recipe.ingredients[i].quantity === undefined && recipe.ingredients[i].unit === undefined) {
-            myIngredient.innerHTML = recipe.ingredients[i].ingredient;
-        } else if (recipe.ingredients[i].quantity !== ' ' && recipe.ingredients[i].unit === undefined) {
-            myIngredient.innerHTML = recipe.ingredients[i].ingredient + ': ' + recipe.ingredients[i].quantity;
-        } else if (recipe.ingredients[i].quantity !== ' ' || recipe.ingredients[i].unit !== ' ') {
-            myIngredient.innerHTML = recipe.ingredients[i].ingredient + ': ' + recipe.ingredients[i].quantity + ' ' + recipe.ingredients[i].unit;
+        if (element.quantity === undefined && element.unit === undefined) {
+            myIngredient.innerHTML = element.ingredient;
+        } else if (element.quantity !== ' ' && element.unit === undefined) {
+            myIngredient.innerHTML = element.ingredient + ': ' + element.quantity;
+        } else if (element.quantity !== ' ' || element.unit !== ' ') {
+            myIngredient.innerHTML = element.ingredient + ': ' + element.quantity + ' ' + element.unit;
         }
         listIngredients.appendChild(myIngredient)
-    }
-    /*recipe.forEach((element) => {
-        let myIngredient = document.createElement('li');
-        myIngredient.classList.add('myIngredient');
-        if (element.ingredients.quantity === undefined && element.ingredients.unit === undefined) {
-            myIngredient.innerHTML = element.ingredients.ingredient;
-        } else if (element.ingredients.quantity !== ' ' && element.ingredients.unit === undefined) {
-            myIngredient.innerHTML = element.ingredients.ingredient + ': ' + element.ingredients.quantity;
-        } else if (element.ingredients.quantity !== ' ' || element.ingredients.unit !== ' ') {
-            myIngredient.innerHTML = element.ingredients.ingredient + ': ' + element.ingredients.quantity + ' ' + element.ingredients.unit;
-        }
-        listIngredients.appendChild(myIngredient)
-    });*/
+    });
     //le conteneur de tous les elements necessaires pour la recette
     const oneRecipe = document.createElement('div');
     oneRecipe.classList.add('oneRecipe');
