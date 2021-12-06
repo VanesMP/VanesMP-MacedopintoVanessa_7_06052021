@@ -2,15 +2,14 @@ import { recipes } from './recipes.js';
 import { createElementHtml } from './htmlTemplate.js';
 import { Chips } from './chips.js';
 
-
 //DOM
+const myRecipe = document.querySelector('.recipes');
 let dataListIngredient = document.getElementById('listElementIngredient');
 let dataListAppareil = document.getElementById('listElementAppareil');
 let dataListUstensil = document.getElementById('listElementUstensil');
 const dropdownIngredient = document.querySelector('.arrowIngredients');
 const dropdownAppareil = document.querySelector('.arrowAppareils');
 const dropdownUstensil = document.querySelector('.arrowUstensiles');
-const myRecipe = document.querySelector('.recipes');
 let inputIngredients = document.querySelector('.ingredients');
 let inputAppareils = document.querySelector('.appareil');
 let inputUstenciles = document.querySelector('.ustensiles');
@@ -55,8 +54,6 @@ function appelCreateHtmlRecette(recipes) {
     })
 }
 appelCreateHtmlRecette(recipes)
-
-
 
 //---------------------- TRI DE NAVIGATION : LA BARRE DE RECHERCHE GENERALE --------------------------
 //EventListener sur la loupe de la barre de menu principal pour faire le premier tri des recettes 
@@ -173,11 +170,10 @@ function recupValues() {
 //2.1.1 liste des ingredients sans doublons a mettre dans la dropdown
 function addListIngredientDataInDropdown() {
     dataListIngredient.innerHTML = '';
-
     recipes.forEach((element) => {
-        for (let i = 0; i < element.ingredients.length; i++) {
-            arrayIngredientForDatalist.push(element.ingredients[i].ingredient);
-        }
+        element.ingredients.forEach((el) => {
+            arrayIngredientForDatalist.push(el.ingredient);
+        })
     })
     arrayIngredientForDatalist.sort();
     arrayIngredientForDatalistSansDoublons = Array.from(new Set(arrayIngredientForDatalist));
@@ -219,17 +215,16 @@ function closingDropdownIngredient() {
 //2.1.3: l element sélectionné tri la liste des recettes pour affiché les recettes qui contiennent l' ingrédients selectionné 
 function createListenerIngredientInDropdown() {
     let liIngredient = document.querySelectorAll('.liIngredient');
-    for (let i = 0; i < liIngredient.length; i++) {
-        liIngredient[i].addEventListener('click', function() {
+    liIngredient.forEach((liIng) => {
+        liIng.addEventListener('click', function() {
             dropdownIngredientClick.classList.add('arrowI')
             closingDropdownIngredient();
-            let myChips = new Chips(INGREDIENT, liIngredient[i].dataset.ingredient);
+            let myChips = new Chips(INGREDIENT, liIng.dataset.ingredient);
             arrayChips.push(myChips);
             createHtmlChips(myChips);
             inputIngredients.value = '';
-            //filterByIngredient(recipes, liIngredient[i].dataset.ingredient)
         })
-    }
+    })
 }
 
 //------- Searchable dropdown: APPAREIL ---------------------------
@@ -270,17 +265,16 @@ dropdownAppareilClick.addEventListener('click', function() {
 //2.2.3: Methode qui recupere l element sélectionné, tri la liste des recettes pour affiché les recettes, et cré le chips 
 function createListenerAppareilInDropdown() {
     let liAppareil = document.querySelectorAll('.liAppareil');
-    for (let i = 0; i < liAppareil.length; i++) {
-        liAppareil[i].addEventListener('click', function() {
+    liAppareil.forEach((liApp) => {
+        liApp.addEventListener('click', function() {
             dataListAppareil.style.display = 'none';
             dropdownAppareil.classList.remove('arrowClick');
-            let myChips = new Chips(APPAREIL, liAppareil[i].dataset.appareil);
+            let myChips = new Chips(APPAREIL, liApp.dataset.appareil);
             arrayChips.push(myChips);
             createHtmlChips(myChips);
             inputAppareils.value = '';
-            filterByAppareil(recipes, liAppareil[i].dataset.appareil);
         })
-    }
+    })
 };
 
 //------- Searchable dropdown: USTENSILES ---------------------------
@@ -289,10 +283,11 @@ function addListUstencilDataInDropdown() {
     dataListUstensil.innerHTML = '';
 
     recipes.forEach((element) => {
-        for (let i = 0; i < element.ustensils.length; i++) {
-            arrayUstensiltForDatalist.push(element.ustensils[i]);
-        }
+        element.ustensils.forEach((el) => {
+            arrayUstensiltForDatalist.push(el);
+        })
     })
+
     arrayUstensiltForDatalist.sort();
     arrayUstensiltForDatalistSansDoublons = Array.from(new Set(arrayUstensiltForDatalist));
     arrayUstensiltForDatalistSansDoublons.forEach((element) => {
@@ -325,19 +320,19 @@ dropdownUstensilClick.addEventListener('click', function() {
 //2.3.3: Methode qui recupere l element sélectionné, tri la liste des recettes pour affiché les recettes, et cré le chips 
 function createListenerUstensilInDropdown() {
     let liUstensil = document.querySelectorAll('.liUstensil');
-    for (let i = 0; i < liUstensil.length; i++) {
-        liUstensil[i].addEventListener('click', function() {
+    liUstensil.forEach((liUst) => {
+        liUst.addEventListener('click', function() {
             dataListUstensil.style.display = 'none';
             dropdownUstensil.classList.remove('arrowClick');
-            let myChips = new Chips(USTENSIL, liUstensil[i].dataset.ustensil);
+            let myChips = new Chips(USTENSIL, liUst.dataset.ustensil);
             arrayChips.push(myChips);
             createHtmlChips(myChips);
             containerUstensils.style.width = "170px";
             inputUstenciles.value = '';
-            filterByUstensile(recipes, liUstensil[i].dataset.ustensil);
         })
-    }
-}
+    })
+};
+
 //Méthode pour créer les chips en html
 function createHtmlChips(chips) {
     divChips = document.createElement('div')
@@ -377,17 +372,17 @@ function closeArrayChips(myChips) {
 function sortRecipeChips(recipes) {
     myRecipe.innerHTML = '';
     let filteredRecipeByChips = recipes;
-    for (let i = 0; i < arrayChips.length; i++) {
-        if (arrayChips[i].type === 'INGREDIENT') {
-            filteredRecipeByChips = filterByIngredient(filteredRecipeByChips, arrayChips[i].myValue)
+    arrayChips.forEach((theChips) => {
+        if (theChips.type === 'INGREDIENT') {
+            filteredRecipeByChips = filterByIngredient(filteredRecipeByChips, theChips.myValue)
         }
-        if (arrayChips[i].type === 'APPAREIL') {
-            filteredRecipeByChips = filterByAppareil(filteredRecipeByChips, arrayChips[i].myValue)
+        if (theChips.type === 'APPAREIL') {
+            filteredRecipeByChips = filterByAppareil(filteredRecipeByChips, theChips.myValue)
         }
-        if (arrayChips[i].type === 'USTENSIL') {
-            filteredRecipeByChips = filterByUstensile(filteredRecipeByChips, arrayChips[i].myValue)
+        if (theChips.type === 'USTENSIL') {
+            filteredRecipeByChips = filterByUstensile(filteredRecipeByChips, theChips.myValue)
         }
-    }
+    });
     appelCreateHtmlRecette(filteredRecipeByChips);
     //Methode pour recuperer les data de chaque dropdown avec les recettes actualisés
     recupDataForDropdown(filteredRecipeByChips);
@@ -527,7 +522,6 @@ function sortByValueUstencil(e) {
 
 //Methode pour recupere les ingredients/appareil/ustensiles pour les placer 
 //dans les dropdown associés elon les recettes qui actualisées
-
 function recupDataForDropdown(pRecipes) {
     dataListAppareil.innerHTML = '';
     dataListUstensil.innerHTML = '';
