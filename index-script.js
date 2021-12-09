@@ -111,10 +111,13 @@ inputIngredients.addEventListener('change', recupValues);
 //Methode pour trier par ingrédients aprés que l utilisateur est saisie retourne les recette filtrées
 function filterByIngredient(recipe, valueIngredient) {
     let goodRecipeIngredient = recipe.filter((element) => {
-        for (let i = 0; i < element.ingredients.length; i++) {
-            if (element.ingredients[i].ingredient.toLowerCase().includes(valueIngredient.toLowerCase())) {
+        let goodReicpeByIngredient = element.ingredients.filter((el) => {
+            if (el.ingredient.toLowerCase().includes(valueIngredient.toLowerCase())) {
                 return true
             }
+        })
+        if (goodReicpeByIngredient.length > 0) {
+            return true;
         }
     })
     console.log('goodRecipeIngredient:', goodRecipeIngredient)
@@ -123,7 +126,7 @@ function filterByIngredient(recipe, valueIngredient) {
 
 //2:Tri par appareils
 inputAppareils.addEventListener('change', recupValues);
-//Methode qui va recuperer la liste des recettes filtré par appareil et appel la methoe pour créer le html 
+//Methode qui va recuperer la liste des recettes filtrées par appareil et appel la methoe pour créer le html 
 function filterByAppareil(recipe, valueAppareil) {
     let goodRecipeAppareil = recipe.filter(element => {
         if (element.appliance.toLowerCase().includes(valueAppareil.toLowerCase())) {
@@ -135,17 +138,21 @@ function filterByAppareil(recipe, valueAppareil) {
 
 //3:Tri par ustensiles
 inputUstenciles.addEventListener('change', recupValues);
-//Methode qui va recuperer la liste des recettes filtré par ustensiles et appel la methoe pour créer le html 
+//Methode qui va recuperer la liste des recettes filtrées par ustensiles et appel la methoe pour créer le html 
 function filterByUstensile(recipe, valueUstensil) {
     let goodRecipeUstensil = recipe.filter((element) => {
-        for (let i = 0; i < element.ustensils.length; i++) {
-            if (element.ustensils[i].toLowerCase().includes(valueUstensil.toLowerCase())) {
+        let goodReicpeByUstensil = element.ustensils.filter((ustensil) => {
+            if (ustensil.toLowerCase().includes(valueUstensil.toLowerCase())) {
                 return true
             }
+        })
+        if (goodReicpeByUstensil.length > 0) {
+            return true;
         }
     })
     return goodRecipeUstensil
 }
+
 //---------- Deuxieme algo de tri faire fonctionner les input tous ensemble
 //recuperer dans la meme variable la liste complete des recette trié a chaque saisi dans un input
 function recupValues() {
@@ -360,13 +367,13 @@ function closeChipsByListener(node, myChips) {
 //Recuperer le tableau global qui contient tous les chips de tous les types 
 //et avec la croix close les supprimer du tableau
 function closeArrayChips(myChips) {
-    for (let i = 0; i < arrayChips.length; i++) {
-        if (arrayChips[i].myValue === myChips.myValue) {
-            findIndex = i;
-            arrayChips.splice(findIndex, 1);
+    arrayChips.forEach((chips) => {
+        if (chips.myValue === myChips.myValue) {
+            let indexOf = arrayChips.indexOf(myChips)
+            arrayChips.splice(indexOf, 1);
             sortRecipeChips(recipes)
         }
-    }
+    })
 }
 
 function sortRecipeChips(recipes) {
