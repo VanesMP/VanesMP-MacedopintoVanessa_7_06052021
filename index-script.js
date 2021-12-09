@@ -21,7 +21,7 @@ const selectionChips = document.getElementById('choice');
 const dropdownIngredientClick = document.querySelector('.arrowI');
 const dropdownUstensilClick = document.querySelector('.arrowU');
 const dropdownAppareilClick = document.querySelector('.arrowA');
-const loupe = document.querySelector('.loupe')
+const loupe = document.querySelector('.loupe');
 
 //Variables globales
 let divChips;
@@ -39,7 +39,6 @@ let ustensilInSelectionRecipe = [];
 let ingredientInSelectionRecipeNoDuplicate = [];
 let appareilInSelectionRecipeNoDuplicate = [];
 let ustensilInSelectionRecipeNoDuplicate = [];
-let findIndex;
 
 //CONSTANTES
 const INGREDIENT = 'INGREDIENT';
@@ -53,7 +52,7 @@ function appelCreateHtmlRecette(recipes) {
         createElementHtml(recipe)
     })
 }
-appelCreateHtmlRecette(recipes)
+appelCreateHtmlRecette(recipes);
 
 //---------------------- TRI DE NAVIGATION : LA BARRE DE RECHERCHE GENERALE --------------------------
 //EventListener sur la loupe de la barre de menu principal pour faire le premier tri des recettes 
@@ -72,27 +71,25 @@ inputMainSearch.addEventListener('click', () => {
 function firstSortRecipeByMainSearch() {
     let listRecipe = recipes;
     let userValueInMainSearch = inputMainSearch.value;
-    //inputMainSearch.value = '';
     myRecipe.innerHTML = '';
     //si la saisie correspond au titre/ingredient/description retourne et affiche les recettes
     if (userValueInMainSearch.length >= 3) {
         selectionRecipe = listRecipe.filter((element) => {
             if (element.name.toLowerCase().includes(userValueInMainSearch.toLowerCase())) {
-                return true
+                return true;
             }
             if (element.description.toLowerCase().includes(userValueInMainSearch.toLowerCase())) {
-                return true
+                return true;
             }
             let selectionByIngredient = element.ingredients.filter((el) => {
                 if (el.ingredient.toLowerCase().includes(userValueInMainSearch.toLowerCase())) {
-                    return true
+                    return true;
                 }
             })
             if (selectionByIngredient.length > 0) {
                 return true;
             }
         });
-        console.log(selectionRecipe)
         appelCreateHtmlRecette(selectionRecipe);
         //Ne laisser dansles dropdown que les data(ingredient & appareil & ustensile) correspond a ceux des recettes
         recupDataForDropdown(selectionRecipe);
@@ -100,7 +97,6 @@ function firstSortRecipeByMainSearch() {
     if (selectionRecipe == '') {
         inputMainSearch.value = '';
         inputMainSearch.placeholder = `Aucune recette ne correspond à votre critère… vous pouvez chercher «tarte aux pommes», «poisson» etc.`;
-        console.log('selectionRecipe:', selectionRecipe)
     }
 }
 
@@ -113,16 +109,15 @@ function filterByIngredient(recipe, valueIngredient) {
     let goodRecipeIngredient = recipe.filter((element) => {
         let goodReicpeByIngredient = element.ingredients.filter((el) => {
             if (el.ingredient.toLowerCase().includes(valueIngredient.toLowerCase())) {
-                return true
+                return true;
             }
         })
         if (goodReicpeByIngredient.length > 0) {
             return true;
         }
     })
-    console.log('goodRecipeIngredient:', goodRecipeIngredient)
     return goodRecipeIngredient;
-};
+}
 
 //2:Tri par appareils
 inputAppareils.addEventListener('change', recupValues);
@@ -143,14 +138,14 @@ function filterByUstensile(recipe, valueUstensil) {
     let goodRecipeUstensil = recipe.filter((element) => {
         let goodReicpeByUstensil = element.ustensils.filter((ustensil) => {
             if (ustensil.toLowerCase().includes(valueUstensil.toLowerCase())) {
-                return true
+                return true;
             }
         })
         if (goodReicpeByUstensil.length > 0) {
             return true;
         }
     })
-    return goodRecipeUstensil
+    return goodRecipeUstensil;
 }
 
 //---------- Deuxieme algo de tri faire fonctionner les input tous ensemble
@@ -158,13 +153,13 @@ function filterByUstensile(recipe, valueUstensil) {
 function recupValues() {
     let filteredRecipe = recipes;
     if (inputIngredients.value !== null) {
-        filteredRecipe = filterByIngredient(filteredRecipe, inputIngredients.value)
+        filteredRecipe = filterByIngredient(filteredRecipe, inputIngredients.value);
     }
     if (inputAppareils.value !== null) {
-        filteredRecipe = filterByAppareil(filteredRecipe, inputAppareils.value)
+        filteredRecipe = filterByAppareil(filteredRecipe, inputAppareils.value);
     }
     if (inputUstenciles.value !== null) {
-        filteredRecipe = filterByUstensile(filteredRecipe, inputUstenciles.value)
+        filteredRecipe = filterByUstensile(filteredRecipe, inputUstenciles.value);
     }
     console.log('filteredRecipe danss la methode recupValue: ', filteredRecipe);
 }
@@ -185,28 +180,28 @@ function addListIngredientDataInDropdown() {
     arrayIngredientForDatalist.sort();
     arrayIngredientForDatalistSansDoublons = Array.from(new Set(arrayIngredientForDatalist));
     arrayIngredientForDatalistSansDoublons.forEach((element) => {
-        let option = document.createElement('li')
-        option.innerHTML = element
-        option.classList.add('liIngredient')
-        option.setAttribute('data-ingredient', element)
-        dataListIngredient.classList.remove('listElementIngredData')
-        dataListIngredient.appendChild(option)
+        let option = document.createElement('li');
+        option.innerHTML = element;
+        option.classList.add('liIngredient');
+        option.setAttribute('data-ingredient', element);
+        dataListIngredient.classList.remove('listElementIngredData');
+        dataListIngredient.appendChild(option);
     })
     createListenerIngredientInDropdown();
-};
-addListIngredientDataInDropdown(recipes)
+}
+addListIngredientDataInDropdown(recipes);
 
 //2.1.2:l'element arrow ouvrir et ferme (si l utilisateur ne veux pas saisir un ingredient) la dropdown avec un gestionnaire d' evenement 'click'
 dropdownIngredientClick.addEventListener('click', function() {
-    if (this.className == 'arrowI') {
-        this.classList.remove('arrowI')
-        openingDropdownIngredient()
-    } else {
-        this.classList.add('arrowI')
-        closingDropdownIngredient()
-    }
-});
-//methode d ouverture
+        if (this.className == 'arrowI') {
+            this.classList.remove('arrowI');
+            openingDropdownIngredient();
+        } else {
+            this.classList.add('arrowI');
+            closingDropdownIngredient();
+        }
+    })
+    //methode d ouverture
 function openingDropdownIngredient() {
     dataListIngredient.style.display = 'block';
     containerIngredients.style.width = "100%";
@@ -224,7 +219,7 @@ function createListenerIngredientInDropdown() {
     let liIngredient = document.querySelectorAll('.liIngredient');
     liIngredient.forEach((liIng) => {
         liIng.addEventListener('click', function() {
-            dropdownIngredientClick.classList.add('arrowI')
+            dropdownIngredientClick.classList.add('arrowI');
             closingDropdownIngredient();
             let myChips = new Chips(INGREDIENT, liIng.dataset.ingredient);
             arrayChips.push(myChips);
@@ -245,13 +240,13 @@ function addListAppareilDataInDropdown() {
     arrayAppareiltForDatalist.sort();
     arrayAppareiltForDatalistSansDoublons = Array.from(new Set(arrayAppareiltForDatalist));
     arrayAppareiltForDatalistSansDoublons.forEach((element) => {
-        let option = document.createElement('li')
-        option.innerHTML = element
-        option.classList.add('liAppareil')
-        option.setAttribute('data-appareil', element)
-        dataListAppareil.appendChild(option)
+        let option = document.createElement('li');
+        option.innerHTML = element;
+        option.classList.add('liAppareil');
+        option.setAttribute('data-appareil', element);
+        dataListAppareil.appendChild(option);
     })
-    createListenerAppareilInDropdown()
+    createListenerAppareilInDropdown();
 }
 
 addListAppareilDataInDropdown();
@@ -259,15 +254,15 @@ addListAppareilDataInDropdown();
 //2.2.2:l'element arrow ouvrir et ferme (si l utilisateur ne veux pas saisir un ingredient) la dropdown avec un gestionnaire d' evenement 'click'
 dropdownAppareilClick.addEventListener('click', function() {
     if (this.className == 'arrowA') {
-        this.classList.remove('arrowA')
+        this.classList.remove('arrowA');
         dataListAppareil.style.display = 'block';
         dropdownAppareil.classList.add('arrowClick');
     } else {
-        this.classList.add('arrowA')
+        this.classList.add('arrowA');
         dataListAppareil.style.display = 'none';
         dropdownAppareil.classList.remove('arrowClick');
     }
-});
+})
 
 //2.2.3: Methode qui recupere l element sélectionné, tri la liste des recettes pour affiché les recettes, et cré le chips 
 function createListenerAppareilInDropdown() {
@@ -282,7 +277,7 @@ function createListenerAppareilInDropdown() {
             inputAppareils.value = '';
         })
     })
-};
+}
 
 //------- Searchable dropdown: USTENSILES ---------------------------
 //2.3.1:liste des ustensiles sans doublons a mettre dans la dropdown
@@ -298,14 +293,14 @@ function addListUstencilDataInDropdown() {
     arrayUstensiltForDatalist.sort();
     arrayUstensiltForDatalistSansDoublons = Array.from(new Set(arrayUstensiltForDatalist));
     arrayUstensiltForDatalistSansDoublons.forEach((element) => {
-        let option = document.createElement('li')
-        option.innerHTML = element
-        option.classList.add('liUstensil')
-        option.setAttribute('data-ustensil', element)
-        dataListUstensil.appendChild(option)
+        let option = document.createElement('li');
+        option.innerHTML = element;
+        option.classList.add('liUstensil');
+        option.setAttribute('data-ustensil', element);
+        dataListUstensil.appendChild(option);
     })
     createListenerUstensilInDropdown();
-};
+}
 
 addListUstencilDataInDropdown();
 
@@ -338,17 +333,17 @@ function createListenerUstensilInDropdown() {
             inputUstenciles.value = '';
         })
     })
-};
+}
 
 //Méthode pour créer les chips en html
 function createHtmlChips(chips) {
-    divChips = document.createElement('div')
-    divChips.classList.add('boxChips')
+    divChips = document.createElement('div');
+    divChips.classList.add('boxChips');
     divChips.setAttribute('data-selectionIngredient', chips.myValue);
     divChips.innerHTML = chips.createHtml();
     selectionChips.classList.remove('displayNone');
     selectionChips.classList.add('displayFlex');
-    selectionChips.appendChild(divChips)
+    selectionChips.appendChild(divChips);
     closeChipsByListener(divChips, chips);
     sortRecipeChips(recipes);
 }
@@ -358,7 +353,7 @@ function closeChipsByListener(node, myChips) {
     let closeChip = node.querySelector('.closeChips');
     closeChip.addEventListener('click', function() {
         node.style.display = 'none';
-        closeArrayChips(myChips)
+        closeArrayChips(myChips);
     })
 }
 
@@ -369,9 +364,9 @@ function closeChipsByListener(node, myChips) {
 function closeArrayChips(myChips) {
     arrayChips.forEach((chips) => {
         if (chips.myValue === myChips.myValue) {
-            let indexOf = arrayChips.indexOf(myChips)
+            let indexOf = arrayChips.indexOf(myChips);
             arrayChips.splice(indexOf, 1);
-            sortRecipeChips(recipes)
+            sortRecipeChips(recipes);
         }
     })
 }
@@ -381,13 +376,13 @@ function sortRecipeChips(recipes) {
     let filteredRecipeByChips = recipes;
     arrayChips.forEach((theChips) => {
         if (theChips.type === 'INGREDIENT') {
-            filteredRecipeByChips = filterByIngredient(filteredRecipeByChips, theChips.myValue)
+            filteredRecipeByChips = filterByIngredient(filteredRecipeByChips, theChips.myValue);
         }
         if (theChips.type === 'APPAREIL') {
-            filteredRecipeByChips = filterByAppareil(filteredRecipeByChips, theChips.myValue)
+            filteredRecipeByChips = filterByAppareil(filteredRecipeByChips, theChips.myValue);
         }
         if (theChips.type === 'USTENSIL') {
-            filteredRecipeByChips = filterByUstensile(filteredRecipeByChips, theChips.myValue)
+            filteredRecipeByChips = filterByUstensile(filteredRecipeByChips, theChips.myValue);
         }
     });
     appelCreateHtmlRecette(filteredRecipeByChips);
@@ -396,7 +391,6 @@ function sortRecipeChips(recipes) {
     if (filteredRecipeByChips.length >= 50) {
         inputMainSearch.value = '';
     }
-    console.log('filteredRecipeByChips dans la methode SortRecipeChips:', filteredRecipeByChips)
 }
 
 //---------------------- TRI AVEC SAISIE >= 3 CARACTERES DANS LES INPUTS -----------------------------
@@ -406,12 +400,11 @@ function sortRecipeChips(recipes) {
 function showSuggestionIngredientInDropdown(list) {
     let listData = list;
     listData = list.map((data) => {
-        //console.log('data:', data)
-        return data = `<li class='liIngredient' data-ingredient='${data}'>${data}</li>`
+        data = `<li class='liIngredient' data-ingredient='${data}'>${data}</li>`;
+        return data;
     });
     dataListIngredient.innerHTML = listData;
-
-    dataListIngredient.classList.add('listElementIngredData')
+    dataListIngredient.classList.add('listElementIngredData');
 }
 
 //EventListener qui permet d 'afficher les choix possible lorsque l utilisateur a saisit 3 lettres(evite d'appuyer sur entrée)
@@ -427,7 +420,7 @@ function sortByValueIngredient(e) {
             return data.toLowerCase().includes(userValueIngredient.toLowerCase());
         });
         //console.log('sortByValueIng :', listIngredientForDataUser)
-        showSuggestionIngredientInDropdown(emptyArrayForInputIngredient)
+        showSuggestionIngredientInDropdown(emptyArrayForInputIngredient);
         createListenerIngredientInDropdown();
         openingDropdownIngredient();
     } else if (userValueIngredient.length < 3) {
@@ -439,11 +432,10 @@ function sortByValueIngredient(e) {
     if (userValueIngredient.length >= 3 && emptyArrayForInputIngredient == '') {
         dataListIngredient.innerHTML = '';
         inputIngredients.value = '';
-        closingDropdownIngredient()
-        alert("Cet ingrédient n'est pas présent dans nos recettes, essayez à nouveau!")
+        closingDropdownIngredient();
+        alert("Cet ingrédient n'est pas présent dans nos recettes, essayez à nouveau!");
     }
-
-};
+}
 
 //2:Methode pour afficher les elements de la liste d'appareil qui correspondent aux 3 lettres saisie par l utilisateur dans l input
 //EventListener qui permet d 'afficher les choix possible lorsque l utilisateur a saisit 3 lettres(evite d'appuyer sur entrée)
@@ -452,8 +444,8 @@ inputAppareils.addEventListener('keyup', sortByValueAppareil);
 function showSuggestionAppareilInDropdown(list) {
     let listData = list;
     listData = list.map((data) => {
-        console.log('data:', data)
-        return data = `<li class='liAppareil' data-appareil='${data}'>${data}</li>`
+        data = `<li class='liAppareil' data-appareil='${data}'>${data}</li>`;
+        return data;
     });
     dataListAppareil.innerHTML = listData;
 }
@@ -466,8 +458,8 @@ function sortByValueAppareil(e) {
         emptyArrayForInputAppareil = listAppareilForValueUser.filter((data) => {
             return data.toLowerCase().includes(userValueAppareil.toLowerCase());
         });
-        showSuggestionAppareilInDropdown(emptyArrayForInputAppareil)
-        createListenerAppareilInDropdown()
+        showSuggestionAppareilInDropdown(emptyArrayForInputAppareil);
+        createListenerAppareilInDropdown();
         dataListAppareil.style.display = 'block';
         dropdownAppareil.classList.add('arrowClick');
     } else if (userValueAppareil.length < 3) {
@@ -476,10 +468,10 @@ function sortByValueAppareil(e) {
     }
     //condition si une saisie ne correspond a aucun appareil
     if (userValueAppareil.length >= 3 && emptyArrayForInputAppareil == '') {
-        createListenerAppareilInDropdown()
+        createListenerAppareilInDropdown();
         inputAppareils.value = '';
         dropdownAppareil.classList.remove('arrowClick');
-        alert("Cet appareil n'est pas présent dans nos recettes, essayez à nouveau!")
+        alert("Cet appareil n'est pas présent dans nos recettes, essayez à nouveau!");
     }
 }
 
@@ -490,11 +482,11 @@ inputUstenciles.addEventListener('keyup', sortByValueUstencil);
 function showSuggestionUstencilInDropdown(list) {
     let listData = list;
     listData = list.map((data) => {
-        console.log('data:', data)
-        return data = `<li class='liUstensil' data-ustensil='${data}'>${data}</li>`
+        data = `<li class='liUstensil' data-ustensil='${data}'>${data}</li>`;
+        return data;
     });
     dataListUstensil.innerHTML = listData;
-    dataListUstensil.classList.add('listElementUstensdData')
+    dataListUstensil.classList.add('listElementUstensdData');
 }
 
 function sortByValueUstencil(e) {
@@ -502,28 +494,25 @@ function sortByValueUstencil(e) {
     let listUstencilForValueUser = arrayUstensiltForDatalistSansDoublons;
     let emptyArrayForInputUstencil = [];
     if (userValueUstencil.length >= 3) {
-        containerUstensils.style.width = '100%'
+        containerUstensils.style.width = '100%';
         emptyArrayForInputUstencil = listUstencilForValueUser.filter((data) => {
             return data.toLowerCase().includes(userValueUstencil.toLowerCase());
         });
-        console.log('emptyArrayForInputUstencil:', emptyArrayForInputUstencil)
         if (emptyArrayForInputUstencil != '') {
-            //console.log('winner')
             showSuggestionUstencilInDropdown(emptyArrayForInputUstencil);
-            createListenerUstensilInDropdown()
+            createListenerUstensilInDropdown();
             dataListUstensil.style.display = 'block';
             dropdownUstensil.classList.add('arrowClick');
         } else {
-            //console.log('lose')
             inputUstenciles.value = '';
             dropdownUstensil.classList.remove('arrowClick');
-            alert("Cet ustensile n'est pas présent dans nos recettes, essayez à nouveau!")
+            alert("Cet ustensile n'est pas présent dans nos recettes, essayez à nouveau!");
         }
     } else if (userValueUstencil.length < 3) {
         dataListUstensil.innerHTML = ' ';
-        containerUstensils.style.width = '170px'
+        containerUstensils.style.width = '170px';
         dropdownUstensil.classList.remove('arrowClick');
-        dataListUstensil.classList.remove('listElementUstensdData')
+        dataListUstensil.classList.remove('listElementUstensdData');
     }
 }
 
@@ -539,61 +528,57 @@ function recupDataForDropdown(pRecipes) {
     pRecipes.forEach((data) => {
         //ingredients
         data.ingredients.forEach((ing) => {
-                ingredientInSelectionRecipe.push(ing.ingredient)
-                ingredientInSelectionRecipe.sort()
+                ingredientInSelectionRecipe.push(ing.ingredient);
+                ingredientInSelectionRecipe.sort();
             })
             //appareils
         appareilInSelectionRecipe.push(data.appliance);
-        appareilInSelectionRecipe.sort()
-            //ustensils
+        appareilInSelectionRecipe.sort();
+        //ustensils
         data.ustensils.forEach((dat) => {
             ustensilInSelectionRecipe.push(dat);
-            ustensilInSelectionRecipe.sort()
+            ustensilInSelectionRecipe.sort();
         })
     });
     //trier par ordre alphabetique puis mettre tous les element dans un tableaux sans les doublons
     //ingredients
     ingredientInSelectionRecipeNoDuplicate = Array.from(new Set(ingredientInSelectionRecipe));
-    console.log(ingredientInSelectionRecipeNoDuplicate)
-        //appareil
+    //appareil
     appareilInSelectionRecipeNoDuplicate = Array.from(new Set(appareilInSelectionRecipe));
-    console.log(appareilInSelectionRecipeNoDuplicate)
-        //ustensils
+    //ustensils
     ustensilInSelectionRecipeNoDuplicate = Array.from(new Set(ustensilInSelectionRecipe));
-    console.log(ustensilInSelectionRecipeNoDuplicate)
-        //placer chaque data dans sa dropdown d' origine
-        //ingredients
+    //placer chaque data dans sa dropdown d' origine
+    //ingredients
     ingredientInSelectionRecipeNoDuplicate.forEach((liIngredient) => {
-        let option = document.createElement('li')
-        option.innerHTML = liIngredient
-        option.classList.add('liIngredient')
-        option.setAttribute('data-ingredient', liIngredient)
-        dataListIngredient.appendChild(option)
-        dataListIngredient.classList.add('listElementIngredData')
+        let option = document.createElement('li');
+        option.innerHTML = liIngredient;
+        option.classList.add('liIngredient');
+        option.setAttribute('data-ingredient', liIngredient);
+        dataListIngredient.appendChild(option);
+        dataListIngredient.classList.add('listElementIngredData');
     });
     if (ingredientInSelectionRecipeNoDuplicate.length > 70) {
-        dataListIngredient.classList.remove('listElementIngredData')
+        dataListIngredient.classList.remove('listElementIngredData');
     }
     //appareil
     appareilInSelectionRecipeNoDuplicate.forEach((liAppareil) => {
-        let option = document.createElement('li')
-        option.innerHTML = liAppareil
-        option.classList.add('liAppareil')
-        option.setAttribute('data-appareil', liAppareil)
-        dataListAppareil.appendChild(option)
+        let option = document.createElement('li');
+        option.innerHTML = liAppareil;
+        option.classList.add('liAppareil');
+        option.setAttribute('data-appareil', liAppareil);
+        dataListAppareil.appendChild(option);
     });
     //ustensils
     ustensilInSelectionRecipeNoDuplicate.forEach((liUstensil) => {
-        let option = document.createElement('li')
-        option.innerHTML = liUstensil
-        option.classList.add('liUstensil')
-        option.setAttribute('data-ustensil', liUstensil)
-        dataListUstensil.appendChild(option)
-            //dataListUstensil.classList.remove('listElementUst')
-        dataListUstensil.classList.add('listElementUstensdData')
+        let option = document.createElement('li');
+        option.innerHTML = liUstensil;
+        option.classList.add('liUstensil');
+        option.setAttribute('data-ustensil', liUstensil);
+        dataListUstensil.appendChild(option);
+        dataListUstensil.classList.add('listElementUstensdData');
     })
 
-    createListenerIngredientInDropdown()
-    createListenerAppareilInDropdown()
-    createListenerUstensilInDropdown()
+    createListenerIngredientInDropdown();
+    createListenerAppareilInDropdown();
+    createListenerUstensilInDropdown();
 }
