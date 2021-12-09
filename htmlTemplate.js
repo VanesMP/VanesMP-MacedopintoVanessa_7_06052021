@@ -16,7 +16,7 @@ export function createElementHtml(recipe) {
         } else if (recipe.ingredients[i].quantity !== ' ' || recipe.ingredients[i].unit !== ' ') {
             myIngredient.innerHTML = recipe.ingredients[i].ingredient + ': ' + recipe.ingredients[i].quantity + ' ' + recipe.ingredients[i].unit;
         }
-        listIngredients.appendChild(myIngredient)
+        listIngredients.appendChild(myIngredient);
     }
     //le conteneur de tous les elements necessaires pour la recette
     const oneRecipe = document.createElement('div');
@@ -56,20 +56,20 @@ export function createElementHtml(recipe) {
     preparationRecipe.innerHTML = recipe.description;
     //Methode appendChild
     //inserer la premiere partie de la 1 : nom + durée
-    firstPartTextRecipe.appendChild(nameRecipe)
-    boxTime.appendChild(timeIcone)
-    boxTime.appendChild(timeRecipe)
-    boxTime.appendChild(minute)
-    firstPartTextRecipe.appendChild(boxTime)
-        //inserer la deuxieme partie de la 1 : 
-    secondPartTextRecipe.appendChild(listIngredients)
-    secondPartTextRecipe.appendChild(preparationRecipe)
-    insideTextRecipe.appendChild(firstPartTextRecipe)
-    insideTextRecipe.appendChild(secondPartTextRecipe)
-    textRecipe.appendChild(insideTextRecipe)
-        //inserer la partie image puis partie texte
-    oneRecipe.appendChild(imageRecipe)
-    oneRecipe.appendChild(textRecipe)
-        //appendChild le plus grand
-    myRecipe.appendChild(oneRecipe)
+    firstPartTextRecipe.appendChild(nameRecipe);
+    boxTime.appendChild(timeIcone);
+    boxTime.appendChild(timeRecipe);
+    boxTime.appendChild(minute);
+    firstPartTextRecipe.appendChild(boxTime);
+    //inserer la deuxieme partie de la 1 : 
+    secondPartTextRecipe.appendChild(listIngredients);
+    secondPartTextRecipe.appendChild(preparationRecipe);
+    insideTextRecipe.appendChild(firstPartTextRecipe);
+    insideTextRecipe.appendChild(secondPartTextRecipe);
+    textRecipe.appendChild(insideTextRecipe);
+    //inserer la partie image puis partie texte
+    oneRecipe.appendChild(imageRecipe);
+    oneRecipe.appendChild(textRecipe);
+    //appendChild le plus grand
+    myRecipe.appendChild(oneRecipe);
 }
