@@ -73,27 +73,28 @@ function firstSortRecipeByMainSearch() {
     let listRecipe = recipes;
     let userValueInMainSearch = inputMainSearch.value;
     myRecipe.innerHTML = '';
+    let newselectionRecipe = [];
     //si la saisie correspond au titre/ingredient/description retourne et affiche les recettes
     if (userValueInMainSearch.length >= 3) {
-        selectionRecipe = listRecipe.filter((element) => {
-            if (element.name.toLowerCase().includes(userValueInMainSearch.toLowerCase())) {
-                return true;
+        selectionRecipe = [];
+        for (let i = 0; i < listRecipe.length; i++) {
+            if (listRecipe[i].name.toLowerCase().includes(userValueInMainSearch.toLowerCase())) {
+                selectionRecipe.push(listRecipe[i]);
             }
-            if (element.description.toLowerCase().includes(userValueInMainSearch.toLowerCase())) {
-                return true;
+            if (listRecipe[i].description.toLowerCase().includes(userValueInMainSearch.toLowerCase())) {
+                selectionRecipe.push(listRecipe[i]);
             }
-            let selectionByIngredient = element.ingredients.filter((el) => {
-                if (el.ingredient.toLowerCase().includes(userValueInMainSearch.toLowerCase())) {
-                    return true;
+            for (let j = 0; j < listRecipe[i].ingredients.length; j++) {
+                if (listRecipe[i].ingredients[j].ingredient.toLowerCase().includes(userValueInMainSearch.toLowerCase())) {
+                    selectionRecipe.push(listRecipe[i]);
                 }
-            })
-            if (selectionByIngredient.length > 0) {
-                return true;
             }
-        });
-        appelCreateHtmlRecette(selectionRecipe);
+            newselectionRecipe = Array.from(new Set(selectionRecipe));
+        }
+        console.log(newselectionRecipe)
+        appelCreateHtmlRecette(newselectionRecipe);
         //Ne laisser dansles dropdown que les data(ingredient & appareil & ustensile) correspond a ceux des recettes
-        recupDataForDropdown(selectionRecipe);
+        recupDataForDropdown(newselectionRecipe);
     }
     if (selectionRecipe == '') {
         inputMainSearch.value = '';
