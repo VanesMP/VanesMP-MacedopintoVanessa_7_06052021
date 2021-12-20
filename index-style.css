@@ -207,13 +207,12 @@ nav {
 
 .listElementUst {
   background-color: #ED6454;
-  width: max-content;
+  width: 100%;
   column-count: 2;
 }
 
 .listElementUstensdData {
   background-color: #ED6454;
-  width: 100%;
   column-count: 1;
 }
 
@@ -367,17 +366,19 @@ section {
 
 .preparationRecipe {
   font: 400 normal 12px "Roboto";
+  display: block;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap;
-  line-height: 12px;
   height: 73%;
 }
 
 @media (max-width: 1300px) {
   .recipes {
     grid-template-columns: 1fr 1fr;
-    gap: 25px 9%;
+    gap: 25px 4%;
   }
 }
 

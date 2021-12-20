@@ -8,6 +8,18 @@
     $ustensiles:#ED6454;
     $search:#E7E7E7;
     $text:#000000;
+    //--------------- Mixins ------------------------------
+    //Faire fonctionnerellipsis sur un text de plusieurs lignes
+    @mixin line-clamp($lines,
+    $line-height) {
+        display: block;
+        display: -webkit-box;
+        -webkit-line-clamp: $lines;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    
     //-------------- Rules document -------------------------
     * {
         width: 100%;
@@ -219,13 +231,12 @@
     
     .listElementUst {
         background-color: $ustensiles;
-        width: max-content;
+        width: 100%;
         column-count: 2;
     }
     
     .listElementUstensdData {
         background-color: $ustensiles;
-        width: 100%;
         column-count: 1;
     }
     
@@ -381,10 +392,12 @@
     
     .preparationRecipe {
         font: 400 normal 12px 'Roboto';
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        line-height: 12px;
+        //text-overflow: ellipsis;
+        //overflow: hidden;
+        //white-space: nowrap;
+        //line-height: 12px;
+        @include line-clamp(7,
+        12px);
         height: 73%;
     }
     
@@ -392,6 +405,6 @@
     @media (max-width: 1300px) {
         .recipes {
             grid-template-columns: 1fr 1fr;
-            gap: 25px 9%;
+            gap: 25px 4%;
         }
     }
