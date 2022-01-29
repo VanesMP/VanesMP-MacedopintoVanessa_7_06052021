@@ -56,11 +56,9 @@ function callCreateHtmlAndRecupDataDropdown(recipes) {
 }
 callCreateHtmlAndRecupDataDropdown(recipes);
 
-//Methode qui va appeller ...............................................................................!!!!!!!
+//fonction qui recuper une liste de recette filtré d' abord par la main bar puis filtré par les chips
 function callFunctionForFilterRecipes() {
-    let myfilteredRecipe = filterRecipeChips(firstSortRecipeByMainSearch(recipes));
-    showRecipeChips(myfilteredRecipe);
-    console.log('myfilteredRecipe function callFunctionForFil... :', myfilteredRecipe)
+    showRecipeChips(filterRecipeChips(firstSortRecipeByMainSearch(recipes))); //test de suppression de la variable intermediaire
 }
 
 //---------------------- TRI DE NAVIGATION : LA BARRE DE RECHERCHE GENERALE --------------------------
@@ -128,7 +126,6 @@ function filterByIngredient(recipe, valueIngredient) {
             return true;
         }
     })
-    console.log('goorIngredient', goodRecipeIngredient)
     return goodRecipeIngredient;
 }
 
@@ -379,7 +376,6 @@ function filterRecipeChips(customRecipes) {
             filteredRecipeByChips = filterByUstensile(filteredRecipeByChips, theChips.myValue);
         }
     });
-    console.log('function filterRecipeChips :', filteredRecipeByChips)
     return filteredRecipeByChips
 }
 
@@ -392,7 +388,6 @@ function showRecipeChips(customRecipes) {
         newfilteredRecipeByChips = customRecipes
     }
     //newfilteredRecipeByChips = customRecipes ? customRecipes : filterRecipeChips(); //si parametre pas null => l'utiliser ; sinon prendre les recettes filtrés par la methode filterRecipeChips
-    console.log('function showRecipeChips', newfilteredRecipeByChips)
     myRecipe.innerHTML = '';
     appelCreateHtmlRecette(newfilteredRecipeByChips);
     //Methode pour recuperer les data de chaque dropdown avec les recettes actualisés
@@ -458,7 +453,6 @@ function sortByValueAppareil(inputAppareils) {
     let userValueAppareil = inputAppareils.target.value;
     let filteredRecipe = [];
     if (inputMainSearch.value == '') {
-        console.log('value mainSearch', inputMainSearch.value)
         filteredRecipe = filterRecipeChips(recipes);
     } else {
         filteredRecipe = filterRecipeChips(filteredRecipeByChips);
