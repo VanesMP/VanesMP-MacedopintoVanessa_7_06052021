@@ -281,6 +281,7 @@ function createListenerIngredientInDropdown() {
             dropdownIngredientClick.classList.add('arrowI');
             closingDropdownIngredient();
             let myChips = new Chips(INGREDIENT, liIng.dataset.ingredient);
+            console.log('li ingredient ', liIng.dataset.ingredient)
             arrayChips.push(myChips);
             createHtmlChips(myChips);
             inputIngredients.value = '';
@@ -366,7 +367,6 @@ function filterRecipeChips(customRecipes) {
     } else {
         filteredRecipeByChips = customRecipes
     }
-    //filteredRecipeByChips = customRecipes ? customRecipes : recipes; //si parametre pas null => l'utiliser ; sinon prendre toute les recettes
     arrayChips.forEach((theChips) => {
         if (theChips.type === 'INGREDIENT') {
             filteredRecipeByChips = filterByIngredient(filteredRecipeByChips, theChips.myValue);
@@ -411,7 +411,7 @@ function sortByValueIngredient(inputIngredients) {
         filteredRecipe = filterRecipeChips(recipes);
         console.log('if: ', filteredRecipe)
     } else {
-        filteredRecipe = filterRecipeChips(filteredRecipeByChips);
+        filteredRecipe = filterRecipeChips(customRecipes);
         console.log('else: ', filteredRecipe)
     }
     let ingredientAvailable = [];
@@ -458,7 +458,7 @@ function sortByValueAppareil(inputAppareils) {
     if (inputMainSearch.value == '') {
         filteredRecipe = filterRecipeChips(recipes);
     } else {
-        filteredRecipe = filterRecipeChips(filteredRecipeByChips);
+        filteredRecipe = filterRecipeChips(customRecipes);
     }
     let appareilAvailable = [];
     filteredRecipe.map(recipe => recipe.appliance)
@@ -499,7 +499,7 @@ function sortByValueUstencil(inputUstenciles) {
     if (inputMainSearch.value == '') {
         filteredRecipe = filterRecipeChips(recipes);
     } else {
-        filteredRecipe = filterRecipeChips(filteredRecipeByChips);
+        filteredRecipe = filterRecipeChips(customRecipes);
     }
     let ustencilesAvailable = [];
     filteredRecipe.map(recipe => recipe.ustensils)
