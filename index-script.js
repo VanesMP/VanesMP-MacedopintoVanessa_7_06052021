@@ -20,7 +20,7 @@ const selectionChips = document.getElementById('choice');
 const dropdownIngredientClick = document.querySelector('.arrowI');
 const dropdownUstensilClick = document.querySelector('.arrowU');
 const dropdownAppareilClick = document.querySelector('.arrowA');
-const loupe = document.querySelector('.loupe');
+const mainSearch = document.getElementById('navSearch');
 
 //Variables globales
 let divChips;
@@ -32,7 +32,6 @@ let ustensilInSelectionRecipe = [];
 let ingredientInSelectionRecipeNoDuplicate = [];
 let appareilInSelectionRecipeNoDuplicate = [];
 let ustensilInSelectionRecipeNoDuplicate = [];
-//let filteredRecipe = [];
 let filteredRecipeByChips = [];
 let newfilteredRecipeByChips = [];
 
@@ -62,9 +61,9 @@ function callFunctionForFilterRecipes() {
 }
 
 //---------------------- TRI DE NAVIGATION : LA BARRE DE RECHERCHE GENERALE --------------------------
-//EventListener sur la loupe de la barre de menu principal pour faire le premier tri des recettes 
+//EventListener sur la barre de recherche principal pour faire le premier tri des recettes 
 //correspondantes à l' entree de l' utilisateur
-loupe.addEventListener('click', callFunctionForFilterRecipes);
+mainSearch.addEventListener('keyup', callFunctionForFilterRecipes);
 
 //EventListener sur la barre de nemu principal pour réafficher le placeholder d 'origine en cas 
 //de correspondance infructueuse lors de la saisi utilisateur
@@ -74,7 +73,7 @@ inputMainSearch.addEventListener('click', () => {
 
 //Methode pour rehercher les recettes correspondant à l entree utilisateur dans la barre de recherche
 //Correspondance dans le titre, les ingredients, la description
-//Afficher uniquement les recettes correspondantes et et les elements des dropdown associés
+//Afficher uniquement les recettes correspondantes et les elements des dropdown associés
 function firstSortRecipeByMainSearch(recipes) {
     let listRecipe = recipes;
     let userValueInMainSearch = inputMainSearch.value;
@@ -99,14 +98,17 @@ function firstSortRecipeByMainSearch(recipes) {
         });
         callCreateHtmlAndRecupDataDropdown(selectionRecipe);
     }
-    if (selectionRecipe == '') {
+    if (selectionRecipe == '' && userValueInMainSearch.length > 3) {
         inputMainSearch.value = '';
         inputMainSearch.placeholder = `Aucune recette ne correspond à votre critère… vous pouvez chercher «tarte aux pommes», «poisson» etc.`;
         selectionRecipe = recipes;
     }
     if (selectionRecipe !== '' && arrayChips.length > 0) {
-        inputMainSearch.value = '';
         inputMainSearch.placeholder = `Rechercher un ingrédient, appareil, ustensiles ou une recette`;
+    }
+    if (userValueInMainSearch.length === 0) {
+        selectionRecipe = [];
+        callCreateHtmlAndRecupDataDropdown(recipes);
     }
     return selectionRecipe
 }
@@ -387,7 +389,6 @@ function showRecipeChips(customRecipes) {
     } else {
         newfilteredRecipeByChips = customRecipes
     }
-    //newfilteredRecipeByChips = customRecipes ? customRecipes : filterRecipeChips(); //si parametre pas null => l'utiliser ; sinon prendre les recettes filtrés par la methode filterRecipeChips
     myRecipe.innerHTML = '';
     appelCreateHtmlRecette(newfilteredRecipeByChips);
     //Methode pour recuperer les data de chaque dropdown avec les recettes actualisés
@@ -408,8 +409,10 @@ function sortByValueIngredient(inputIngredients) {
     let filteredRecipe = [];
     if (inputMainSearch.value == '') {
         filteredRecipe = filterRecipeChips(recipes);
+        console.log(filteredRecipe)
     } else {
         filteredRecipe = filterRecipeChips(filteredRecipeByChips);
+        console.log(filteredRecipe)
     }
     let ingredientAvailable = [];
     filteredRecipe.map(recipe => recipe.ingredients)

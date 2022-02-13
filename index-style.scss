@@ -392,17 +392,35 @@
     
     .preparationRecipe {
         font: 400 normal 12px 'Roboto';
-        //text-overflow: ellipsis;
-        //overflow: hidden;
-        //white-space: nowrap;
-        //line-height: 12px;
         @include line-clamp(7,
         12px);
         height: 73%;
     }
     
     //---------------------MEDIA QUERIES: Style pour la section -------------------------------------------
-    @media (max-width: 1300px) {
+    @media all and ( max-width: 1670px) {
+        body {
+            width: 80%;
+        }
+        .recipes {
+            gap: 25px 2%;
+        }
+    }
+    
+    @media all and ( max-width: 1510px) {
+        body {
+            width: 89%;
+        }
+    }
+    
+    @media all and (min-width: 1300px) and ( max-width: 1600px) {
+        .oneRecipe {
+            width: 370px;
+            height: 360px;
+        }
+    }
+    
+    @media all and (max-width: 1300px) {
         .recipes {
             grid-template-columns: 1fr 1fr;
             gap: 25px 4%;
