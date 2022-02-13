@@ -409,10 +409,10 @@ function sortByValueIngredient(inputIngredients) {
     let filteredRecipe = [];
     if (inputMainSearch.value == '') {
         filteredRecipe = filterRecipeChips(recipes);
-        console.log(filteredRecipe)
+        console.log('if: ', filteredRecipe)
     } else {
         filteredRecipe = filterRecipeChips(filteredRecipeByChips);
-        console.log(filteredRecipe)
+        console.log('else: ', filteredRecipe)
     }
     let ingredientAvailable = [];
     filteredRecipe.map(recipe => recipe.ingredients)
