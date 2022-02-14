@@ -281,7 +281,6 @@ function createListenerIngredientInDropdown() {
             dropdownIngredientClick.classList.add('arrowI');
             closingDropdownIngredient();
             let myChips = new Chips(INGREDIENT, liIng.dataset.ingredient);
-            console.log('li ingredient ', liIng.dataset.ingredient)
             arrayChips.push(myChips);
             createHtmlChips(myChips);
             inputIngredients.value = '';
@@ -409,10 +408,8 @@ function sortByValueIngredient(inputIngredients) {
     let filteredRecipe = [];
     if (inputMainSearch.value == '') {
         filteredRecipe = filterRecipeChips(recipes);
-        console.log('if: ', filteredRecipe)
     } else {
         filteredRecipe = filterRecipeChips(filteredRecipeByChips);
-        console.log('else: ', filteredRecipe)
     }
     let ingredientAvailable = [];
     filteredRecipe.map(recipe => recipe.ingredients)
